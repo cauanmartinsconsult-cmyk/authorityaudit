@@ -51,7 +51,7 @@ button:hover {
 <p>This submission initiates structural qualification.</p>
 <p>All applications are reviewed manually.</p>
 
-<form action="https://formspree.io/f/xaqdzzqj" method="POST">
+<form id="auditRequestForm" action="https://formspree.io/f/xaqdzzqj" method="POST">
 <input type="hidden" name="_next" value="https://authorityaudit.cauanmartins.com/submitted">
     
     <input type="text" name="Name" placeholder="Name" required>
@@ -68,6 +68,29 @@ button:hover {
 </form>
 
 <p class="small">Response window: 3–5 business days. No automated responses.</p>
+<script>
+const form = document.getElementById("auditRequestForm");
 
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  const response = await fetch(form.action, {
+    method: "POST",
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    window.location.href = "/submitted";
+  } else {
+    alert("Submission failed. Try again.");
+  }
+});
+</script>
+    
 </body>
 </html>
